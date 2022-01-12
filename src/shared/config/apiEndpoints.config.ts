@@ -195,6 +195,12 @@ export const apiMap = {
             },
         ],
         ptPetra: {
+            projectDetailsApi: {
+              description: 'Get Details of a Project',
+              domain: 'proptiger.com',
+              method: 'GET',
+              url: '/app/v4/project-detail/'
+            },
             projectListingApi : {
                 description: '',
                 domain: 'proptiger.com',
