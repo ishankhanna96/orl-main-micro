@@ -22,7 +22,7 @@ export class PtSearchResolver {
     /**
      *  Get Project Listings by id args(cityLabel,localityId)
      */
-    @Query(() => [Project], { name: 'projectDetails', nullable: true })
+    @Query(() => Project, { name: 'projectDetails', nullable: true })
     getProjectDetails(@Args() getProjectDetailsArgs: GetProjectDetailsArgs, @Info() info): any {
         const fieldMap = fieldsMap(info);
         return this.ptSearchService.getProjectDetails(getProjectDetailsArgs, fieldMap);
