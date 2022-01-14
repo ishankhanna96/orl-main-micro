@@ -194,6 +194,14 @@ export const apiMap = {
                 url: '/app/v1/reset-password',
             },
         ],
+        ptColumbus: {
+          typeaheadApi: {
+            description: 'Get Typeahead results',
+            domain: 'proptiger.com',
+            method: 'GET',
+            url: '/columbus/app/v6/typeahead',
+          },
+        },
         ptPetra: {
             projectDetailsApi: {
               description: 'Get Details of a Project',

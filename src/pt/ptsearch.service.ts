@@ -2,7 +2,9 @@ import { Injectable } from '@nestjs/common';
 
 import { apiMap } from 'src/shared/config/apiEndpoints.config';
 import { parseFieldsFromObject } from 'src/utils/parser';
+import { GetTypeAheadArgs } from './dto/args/getTypeAhead.args';
 import { Project } from './models/projectList';
+import { TypeAhead } from './models/typeAhead';
 
 const axios = require('axios');
 
@@ -69,5 +71,18 @@ export class PtSearchService {
       const finalUrl = `http://${domain}${url}${projectId}?selector=${selector}`;
       const { data: { data: projectDetails = {} } = {} } = await axios.get(finalUrl);
       return projectDetails;
+    }
+
+    async getTypeAheadResults(getTypeAheadArgs: GetTypeAheadArgs): Promise<[TypeAhead]> {
+      const { domain, url } = apiMap.backend.ptColumbus.typeaheadApi;
+      let finalUrl = `https://${domain}${url}?`;
+      Object.keys(getTypeAheadArgs).forEach((key, index) => {
+        finalUrl += `${key}=${getTypeAheadArgs[key]}`;
+        if (index < Object.keys(getTypeAheadArgs).length - 1) {
+          finalUrl += '&'
+        }
+      });
+      const { data: { data: results = [] } = {} } = await axios.get(finalUrl);
+      return results;
     }
 }
