@@ -4,6 +4,35 @@ import { Field, ObjectType } from '@nestjs/graphql';
  * Empty unknown object types in petra response defined with a
  * default field for passing nest validation
  */
+
+/* 
+    ! The keys in JSON have space which is not accepted by nest 
+    ! To be changed (pre launch, under construction, on jold, not launched)
+*/
+@ObjectType()
+class ProjectStatusCount {
+    @Field({ nullable: true })
+    underConstruction: number;
+
+    @Field({ nullable: true })
+    launch: number;
+
+    @Field({ nullable: true })
+    completed: number;
+
+    @Field({ nullable: true })
+    notLaunched: number;
+
+    @Field({ nullable: true })
+    preLaunch: number;
+
+    @Field({ nullable: true })
+    cancelled: number;
+
+    @Field({ nullable: true })
+    onHold: number;
+}
+
 @ObjectType()
 class LocalityTaxonomyUrlObject {
     @Field({ nullable: true })
@@ -208,6 +237,48 @@ class Builder {
 
     @Field({ nullable: true })
     averageDelay: number;
+
+    @Field({ nullable: true })
+    description: string;
+
+    @Field({ nullable: true })
+    isDescriptionCrawlable: boolean;
+
+    @Field({ nullable: true })
+    establishedDate: number;
+
+    @Field({ nullable: true })
+    priority: number;
+
+    @Field({ nullable: true })
+    projectStatusCount: ProjectStatusCount;
+
+    @Field({ nullable: true })
+    projectCount: number;
+
+    @Field({ nullable: true })
+    builderWebsite: string;
+
+    @Field({ nullable: true })
+    builderAddress: string;
+
+    @Field({ nullable: true })
+    builderLocalityCount: number;
+
+    @Field(() => [ImageObject], { nullable: true })
+    images: [ImageObject];
+
+    @Field(() => [String], { nullable: true })
+    builderCities: string[];
+
+    @Field({ nullable: true })
+    mainImage: MainImage;
+
+    @Field(() => [String], { nullable: true })
+    builderSourceDomain: string[];
+
+    @Field({ nullable: true })
+    isBuilderPremium: boolean;
 }
 
 @ObjectType()
@@ -316,25 +387,6 @@ class ImageType {
 
     @Field({ nullable: true })
     mediaDuplicacyRule: MediaDuplicacyRule;
-}
-
-/* 
-    ! The keys in JSON have space which is not accepted by nest 
-    ! To be changed (under construction, not launched)
-*/
-@ObjectType()
-class ProjectStatusCount {
-    @Field({ nullable: true })
-    underConstruction: number;
-
-    @Field({ nullable: true })
-    launch: number;
-
-    @Field({ nullable: true })
-    completed: number;
-
-    @Field({ nullable: true })
-    notLaunched: number;
 }
 
 @ObjectType()
