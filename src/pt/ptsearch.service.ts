@@ -2,7 +2,12 @@ import { Injectable } from '@nestjs/common';
 
 import { apiMap } from 'src/shared/config/apiEndpoints.config';
 import { parseFieldsFromObject } from 'src/utils/parser';
+import { GetCountryDetailsArgs } from './dto/args/getCountryDetails.args';
 import { GetTypeAheadArgs } from './dto/args/getTypeAhead.args';
+import { Enquiry } from './dto/input/createEnquiry.input';
+import { Country } from './models/country';
+import { EnquiryIcrm } from './models/enquiryIcrm';
+import { EnquiryPetra } from './models/enquiryPetra';
 import { Project } from './models/projectList';
 import { TypeAhead } from './models/typeAhead';
 
@@ -84,5 +89,26 @@ export class PtSearchService {
       });
       const { data: { data: results = [] } = {} } = await axios.get(finalUrl);
       return results;
+    }
+
+    async getCountryDetails(getCountryArgs: GetCountryDetailsArgs): Promise<Country> {
+      const { domain, url } = apiMap.backend.ptPetra.countryDetailsApi;
+      const finalUrl = `https://${domain}${url}${getCountryArgs.countryId}`;
+      const { data: { data: response = {} } = {} } = await axios.get(finalUrl);
+      return response;
+    }
+
+    async createEnquiryIcrm(enquiry: Enquiry): Promise<EnquiryIcrm> {
+      const { domain, url } = apiMap.backend.ptIcrm.createEnquiryApi;
+      const finalUrl = `https://${domain}${url}?debug=true&lastEnquiryRequired=true`;
+      const { data: { data: response = {} } = {} } = await axios.post(finalUrl, enquiry);
+      return response;
+    }
+
+    async createEnquiryPetra(enquiry: Enquiry): Promise<EnquiryPetra> {
+      const { domain, url } = apiMap.backend.ptPetra.createEnquiryApi;
+      const finalUrl = `https://${domain}${url}?debug=true&lastEnquiryRequired=true`;
+      const { data: { data: response = {} } = {} } = await axios.post(finalUrl, enquiry);
+      return response;
     }
 }

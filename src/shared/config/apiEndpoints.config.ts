@@ -202,7 +202,27 @@ export const apiMap = {
             url: '/columbus/app/v6/typeahead',
           },
         },
+        ptIcrm: {
+          createEnquiryApi: {
+            description: 'API to create an enquiry in ICRM',
+            domain: 'proptiger.com',
+            method: 'POST',
+            url: '/icrm/v1/temp-enquiries',
+          },
+        },
         ptPetra: {
+            countryDetailsApi: {
+              description: 'Get Country Details',
+              domain: 'proptiger.com',
+              method: 'GET',
+              url: '/data/v1/entity/country/',
+            },
+            createEnquiryApi: {
+              description: 'API to create an enquiry in Petra',
+              domain: 'proptiger.com',
+              method: 'POST',
+              url: '/data/v1/entity/enquiry',
+            },
             projectDetailsApi: {
               description: 'Get Details of a Project',
               domain: 'proptiger.com',

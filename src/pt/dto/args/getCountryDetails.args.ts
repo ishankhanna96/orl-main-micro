@@ -1,7 +1,7 @@
 import { ArgsType, Field } from '@nestjs/graphql';
 
 @ArgsType()
-export class getCountryDetailsArgs {
+export class GetCountryDetailsArgs {
     @Field()
     countryId: number;
 }
