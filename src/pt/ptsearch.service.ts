@@ -59,4 +59,15 @@ export class PtSearchService {
 
         return response.data.data.items;
     }
+
+    async getProjectDetails(projectDetailArgs, fieldMap): Promise<Project> {
+      const { projectId } = projectDetailArgs;
+      const selector = JSON.stringify({
+        fields: parseFieldsFromObject({ object: fieldMap }),
+      });
+      const { domain, url } = apiMap.backend.ptPetra.projectDetailsApi;
+      const finalUrl = `http://${domain}${url}${projectId}?selector=${selector}`;
+      const { data: { data: projectDetails = {} } = {} } = await axios.get(finalUrl);
+      return projectDetails;
+    }
 }

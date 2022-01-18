@@ -1,4 +1,5 @@
 import { Module, MiddlewareConsumer } from '@nestjs/common';
+import { APP_FILTER, APP_INTERCEPTOR } from '@nestjs/core';
 
 import { ReqestMiddleware } from 'src/shared/middlewares';
 import { ConfigModule } from '@nestjs/config';
@@ -7,7 +8,8 @@ import { ContentModule } from 'src/test-content/content.module';
 import { ContentService } from 'src/test-content/content.service';
 import { ContentController } from 'src/test-content/content.controller';
 import { PtSearchModule } from 'src/pt/ptsearch.module';
-import { PtSearchService } from 'src/pt/ptsearch.service';
+import { LoggerInterceptor } from 'src/logger/logger.interceptor';
+import { HttpErrorFilter } from 'src/shared/filter/http-error.util';
 import { AppService } from './app.service';
 import { ApplicationLoggerModule } from '../logger/logger.module';
 import { AppController } from './app.controller';
@@ -26,21 +28,21 @@ import { AppController } from './app.controller';
         }),
         GraphQLModule.forRoot({
             autoSchemaFile: true,
+            debug: false,
             path: process.env.GRAPHQL_PATH,
         }),
     ],
     providers: [
         AppService,
         ContentService,
-        PtSearchService
-        // {
-        //     provide: APP_FILTER,
-        //     useClass: HttpErrorFilter,
-        // },
-        // {
-        //     provide: APP_INTERCEPTOR,
-        //     useClass: LoggerInterceptor,
-        // },
+        {
+            provide: APP_FILTER,
+            useClass: HttpErrorFilter,
+        },
+        {
+            provide: APP_INTERCEPTOR,
+            useClass: LoggerInterceptor,
+        },
     ],
 })
 export class AppModule {
